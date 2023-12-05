@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p class="one"></p>
+    <p class= "two"></p>
+    <script>
+        async function getData(){
+            try{
+                const response = await fetch('https://pokeapi.co/api/v2/pokemon/ditto',{METHOD: 'Get'});
+                const data = await response.json();
+                console.log(data);
+                const info = {
+                    name: data.forms[0].name,
+                    exp : data.base_experience,
+                    abilities: data.abilities
+                }
+                info.abilities.forEach(el => {
+                    if(el.is_hidden === false){
+                        info.abilities = el;
+                    }
+                });
+                console.log(info.abilities);
+                let p_one = document.getElementsByClassName(".one")
+                let p_two = document.getElementsByClassName(".two")
+                p_one = info.name;
+                p_two = info.exp;
+
+            }
+            catch(error){
+                console.error(error);
+            }
+            
+        }
+        getData()
+    </script>
+</body>
+</html>
